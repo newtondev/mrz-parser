@@ -1,14 +1,15 @@
 {
   "name": "newtondev-mrz-parser",
-  "version": "1.0.0",
   "description": "Parses the MRZ found of Passport and Travel Documents and returns the data in a human readable form.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "commit": "git-cz",
+    "test": "mocha src/index.test.js -w",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/newtondev/mrz-parser.git"
+    "url": "https://github.com/newtondev/mrz-parser.git"
   },
   "keywords": [
     "mrz",
@@ -22,5 +23,17 @@
   "bugs": {
     "url": "https://github.com/newtondev/mrz-parser/issues"
   },
-  "homepage": "https://github.com/newtondev/mrz-parser#readme"
+  "homepage": "https://github.com/newtondev/mrz-parser#readme",
+  "devDependencies": {
+    "chai": "3.5.0",
+    "commitizen": "2.7.6",
+    "cz-conventional-changelog": "1.1.5",
+    "mocha": "2.4.5",
+    "semantic-release": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  }
 }
