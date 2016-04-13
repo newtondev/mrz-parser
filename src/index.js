@@ -1,7 +1,3 @@
 module.exports = {
-  hello: helloWorld
+  hello: [ "Hello", "World" ]
 };
-
-hello() {
-  console.log('Hello World!');
-}
