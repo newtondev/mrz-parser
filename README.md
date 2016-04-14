@@ -17,7 +17,7 @@ var data = lib.parse('P<CANMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9CAN8
 
 The Result is a javascript object with the decoded information:
 
-```json
+```javascript
 {
   documentCode: 'P',
   documentType: 'PASSPORT',
