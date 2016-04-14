@@ -2,6 +2,10 @@ import {expect, assert} from 'chai';
 import {parse} from './index';
 
 const mrz = 'P<CANMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9CAN8501019F2301147<<<<<<<<<<<<<<08';
+const faultyMrz = 'G<CANMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9CAN8501019F2301147<<<<<<<<<<<<<<08';
+const maleMrz = 'P<CANMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9CAN8501019M2301147<<<<<<<<<<<<<<08';
+const unknownMrz = 'P<CANMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9CAN8501019X2301147<<<<<<<<<<<<<<08';
+const nationalityFailMrz = 'P<UTOMARTIN<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<ZE000509<9UTO8501019X2301147<<<<<<<<<<<<<<08';
 
 describe('newtondev-mrz-parser', () => {
   describe('parse', function() {
@@ -9,6 +13,10 @@ describe('newtondev-mrz-parser', () => {
 
     it('should return object for parsed MRZ', () => {
       assert.isObject(parse(mrz));
+    });
+
+    it('faultyMrz should return an Error', () => {
+      expect(() => parse(faultyMrz)).to.throw(Error);
     });
 
     it('documentCode should be: P', () => {
@@ -181,6 +189,26 @@ describe('newtondev-mrz-parser', () => {
 
     it('personalNumber should be an empty string', () => {
       expect(passport.personalNumber).to.equal('');
+    });
+
+    it('female sex check', () => {
+      expect(passport.sex.abbr).to.equal('F');
+    });
+
+    it('male sex check', () => {
+      expect(parse(maleMrz).sex.abbr).to.equal('M');
+    });
+
+    it('unknown sex check', () => {
+      expect(parse(unknownMrz).sex.abbr).to.equal('X');
+    });
+
+    it('nationalityFailMrz should return an Error', () => {
+      expect(() => parse(nationalityFailMrz)).to.throw(Error);
+    });
+
+    it('mrz is null to return an Error', () => {
+      expect(() => parse(null)).to.throw(Error);
     });
   });
 });

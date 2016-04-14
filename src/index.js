@@ -344,12 +344,12 @@ function parse (mrz) {
     let checkDigitVerify4 = _checkDigitVerify(personalNumberRaw, checkDigit4);
     let checkDigit5 = mrz.substring(87, 88);
     let finalCheckDigitRaw = documentNumberRaw + checkDigit1 + dobRaw + checkDigit2
-          + expiryRaw + checkDigit3 + personalNumberRaw + checkDigit4;
+        + expiryRaw + checkDigit3 + personalNumberRaw + checkDigit4;
     let checkDigitVerify5 = _checkDigitVerify(finalCheckDigitRaw, checkDigit5);
 
     return {
       documentCode: documentCode,
-      documentType: ((documentCode == 'P') ? 'PASSPORT' : 'UNKNOWN'),
+      documentType: 'PASSPORT',
       documentTypeCode: documentType,
       issuer: issuerOrg,
       names: names,
@@ -358,19 +358,18 @@ function parse (mrz) {
       dob: dob,
       sex: sex,
       checkDigit: {
-        documentNumber: { value: checkDigit1, valid: checkDigitVerify1 },
-        dob: { value: checkDigit2, valid: checkDigitVerify2 },
-        expiry: { value: checkDigit3, valid: checkDigitVerify3 },
-        personalNumber: { value: checkDigit4, valid: checkDigitVerify4 },
-        finalCheck: { value: checkDigit5, valid: checkDigitVerify5 },
+        documentNumber: {value: checkDigit1, valid: checkDigitVerify1},
+        dob: {value: checkDigit2, valid: checkDigitVerify2},
+        expiry: {value: checkDigit3, valid: checkDigitVerify3},
+        personalNumber: {value: checkDigit4, valid: checkDigitVerify4},
+        finalCheck: {value: checkDigit5, valid: checkDigitVerify5},
         valid: (checkDigitVerify1 && checkDigitVerify2 && checkDigitVerify3 && checkDigitVerify4 && checkDigitVerify5)
       },
       expiry: expiry,
       personalNumber: personalNumber
     };
   } catch (err) {
-    console.error(err);
-    throw new Error('Details parsing failed');
+    throw err;
   }
 };
 
@@ -481,15 +480,15 @@ const _getSex = (str) => {
  * @private
  */
 const _getNationality = (str) => {
-  try {
-    let region = _countries[str];
-    return {
-      abbr: str,
-      full: region
-    };
-  } catch (err) {
+  let region = _countries[str];
+  if (!region) {
     throw new Error('Invalid region');
   }
+
+  return {
+    abbr: str,
+    full: region
+  };
 };
 
 /**

@@ -1,12 +1,13 @@
 {
   "name": "newtondev-mrz-parser",
+  "version": "0.0.0-semantically-released",
   "description": "Parses the MRZ found of Passport and Travel Documents and returns the data in a human readable form.",
   "main": "src/index.js",
   "scripts": {
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "babel --presets es2015 src/index.js -o dist/index.js",
     "commit": "git-cz",
-    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "check-coverage": "istanbul check-coverage --statements 100 --branches 95 --functions 100 --lines 100",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "test": "mocha src/index.test.js -w --compilers js:babel-core/register",
     "test:single": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel-core/register",
@@ -38,7 +39,7 @@
     "commitizen": "2.7.6",
     "cz-conventional-changelog": "1.1.5",
     "ghooks": "1.2.1",
-    "istanbul": "0.4.3",
+    "istanbul": "1.0.0-alpha.2",
     "mocha": "2.4.5",
     "semantic-release": "^4.3.5"
   },
@@ -49,5 +50,6 @@
     "ghooks": {
       "pre-commit": "npm run test:single && npm run check-coverage"
     }
-  }
+  },
+  "dependencies": {}
 }
